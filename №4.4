@@ -1,0 +1,21 @@
+import numpy as np
+
+# Задані матриці
+matrix1 = np.array([[2, 1, 7], [3, 4, 1], [0, 6, 7]])
+matrix2 = np.array([[0, 3, 6], [2, 4, 7], [0, 5, 8]])
+matrix3 = np.array([[2, 1, 2], [4, 4, 5], [1, 2, 3]])
+
+# Знаходження визначників
+det1 = np.linalg.det(matrix1)
+det2 = np.linalg.det(matrix2)
+det3 = np.linalg.det(matrix3)
+
+# Виведення результатів
+print("Визначник матриці 1:")
+print(det1)
+
+print("\nВизначник матриці 2:")
+print(det2)
+
+print("\nВизначник матриці 3:")
+print(det3)
