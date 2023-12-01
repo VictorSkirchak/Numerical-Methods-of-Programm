@@ -1,0 +1,41 @@
+from scipy import integrate
+import math
+
+# Define the function to be integrated
+def f(x):
+    return 1 / math.sqrt(3 * x**2 - 1)
+
+# Set the integration limits and initial number of divisions
+a = 1.4
+b = 2.1
+n = 20
+
+# Calculate the integral using the trapezoidal rule
+def trapezoidal_rule(f, a, b, n):
+    h = (b - a) / n
+    x = a
+    sum = 0
+    for i in range(1, n):
+        x += h
+        sum += 2 * f(x)
+    sum += f(b)
+    integral = h / 2 * sum
+
+    return integral
+
+# Calculate the integral with a precision of 0.001
+# Check the accuracy using the Runge's rule
+integral1 = trapezoidal_rule(f, a, b, n)
+integral2 = trapezoidal_rule(f, a, b, n * 2)
+while abs(integral2 - integral1) / 3 > 0.001:
+    integral1 = integral2
+    n *= 2
+    integral2 = trapezoidal_rule(f, a, b, n)
+
+# Print the result
+print("Метод трапецій:", round(integral2, 7))
+
+# Check with scipy's quad function
+v, err = integrate.quad(f, a, b)
+print("Перевірка для методу трапецій =", round(v, 7))
+
