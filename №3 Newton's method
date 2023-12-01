@@ -1,0 +1,28 @@
+import numpy as np
+from scipy.misc import derivative
+
+def f(x):
+    return 3 * pow(x, 4) - 2 * pow(x, 3) - pow(x, 2) + x - 4
+
+a = -2.
+b = -1.
+
+eps = 0.001 
+
+def newton(a, b, eps):
+    df2 = derivative(f, b, n=2)
+    if (f(b) * df2 > 0):
+        xi = b
+    else:
+        xi = a
+    df = derivative(f, xi, n=1)
+    xi_1 = xi - f(xi) / df
+
+    while (abs(xi_1 - xi) > eps):
+        xi = xi_1
+        xi_1 = xi - f(xi) / df
+
+    return xi_1
+
+result = newton(a, b, eps)
+print('Розв\'язок рівняння за методом Ньютона x =', result)
