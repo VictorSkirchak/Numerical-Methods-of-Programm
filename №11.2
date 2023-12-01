@@ -1,0 +1,43 @@
+from scipy import integrate
+import math
+
+# Define the function to be integrated
+def g(x):
+    return math.sin(x + 3)
+
+def f(x):
+    return (math.sqrt(x+1) * math.log(x+3, 10))
+
+# Set the integration limits and initial number of divisions
+a = 0.15
+b = 0.63
+n = 8
+
+# Calculate the integral using the Simpson's rule
+def simpson_rule(f, a, b, n):
+    h = (b - a) / n
+    integr = f(a) + f(b)
+    for i in range(1, n):
+        k = a + i * h
+        if i % 2 == 0:
+            integr += 2 * f(k)
+        else:
+            integr += 4 * f(k)
+    integr *= h / 3
+    return integr
+
+# Calculate the integral with a precision of 0.001
+integral1 = simpson_rule(f, a, b, n)
+integral2 = simpson_rule(f, a, b, n * 2)
+while abs(integral2 - integral1) / 15 > 0.001:
+    integral1 = integral2
+    n *= 2
+    integral2 = simpson_rule(f, a, b, n)
+
+# Print the result
+print("Метод Сімпсона:", round(integral2, 7))
+
+# Check with scipy's quad function
+v, err = integrate.quad(f, a, b)
+print("Перевірка для методу Сімпсона =", round(v, 7))
+
